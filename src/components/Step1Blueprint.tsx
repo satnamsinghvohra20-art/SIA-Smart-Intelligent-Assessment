@@ -3,15 +3,10 @@ import { PaperDetails, QuestionTypeConfig, Difficulty } from '../types/paper';
 import { 
   ArrowRight, 
   GraduationCap, 
-  BookOpen, 
-  Clock, 
-  Award, 
-  Sliders, 
-  Plus, 
-  Trash2, 
+  Building2, 
   CheckCircle2, 
-  Building2,
-  FileText
+  Trash2,
+  Sparkles
 } from 'lucide-react';
 
 interface Step1BlueprintProps {
@@ -30,6 +25,7 @@ export const Step1Blueprint: React.FC<Step1BlueprintProps> = ({
   onNext
 }) => {
   const [newInstruction, setNewInstruction] = useState('');
+  const [degreeCategory, setDegreeCategory] = useState<'all' | 'cs' | 'phys' | 'chem' | 'bio' | 'math' | 'applied'>('all');
 
   const calculatedTotalMarks = questionConfigs
     .filter(c => c.enabled)
@@ -67,17 +63,58 @@ export const Step1Blueprint: React.FC<Step1BlueprintProps> = ({
     });
   };
 
-  const bscPrograms = [
-    'B.Sc. Computer Science',
-    'B.Sc. Physics',
-    'B.Sc. Mathematics',
-    'B.Sc. Chemistry',
-    'B.Sc. Biotechnology',
-    'B.Sc. Information Technology',
-    'B.Sc. Electronics',
-    'B.Sc. Statistics',
-    'B.Sc. Zoology / Botany'
+  // Comprehensive Catalog of B.Sc. Degree Programs
+  const bscProgramsCategorized = [
+    // Computing & Data
+    { name: 'B.Sc. Computer Science', category: 'cs' },
+    { name: 'B.Sc. Information Technology', category: 'cs' },
+    { name: 'B.Sc. Data Science & Analytics', category: 'cs' },
+    { name: 'B.Sc. Artificial Intelligence & ML', category: 'cs' },
+    { name: 'B.Sc. Cyber Security & Forensics', category: 'cs' },
+    { name: 'B.Sc. Bioinformatics', category: 'cs' },
+
+    // Physical Sciences & Electronics
+    { name: 'B.Sc. Physics', category: 'phys' },
+    { name: 'B.Sc. Applied Physics', category: 'phys' },
+    { name: 'B.Sc. Electronics', category: 'phys' },
+    { name: 'B.Sc. Astrophysics & Space Science', category: 'phys' },
+    { name: 'B.Sc. Nanotechnology & Materials Science', category: 'phys' },
+    { name: 'B.Sc. Geophysics & Meteorology', category: 'phys' },
+
+    // Chemical & Biochemical
+    { name: 'B.Sc. Chemistry', category: 'chem' },
+    { name: 'B.Sc. Biochemistry', category: 'chem' },
+    { name: 'B.Sc. Industrial & Analytical Chemistry', category: 'chem' },
+    { name: 'B.Sc. Polymer Chemistry', category: 'chem' },
+
+    // Life Sciences & Medical/Bio
+    { name: 'B.Sc. Biotechnology', category: 'bio' },
+    { name: 'B.Sc. Microbiology', category: 'bio' },
+    { name: 'B.Sc. Zoology', category: 'bio' },
+    { name: 'B.Sc. Botany', category: 'bio' },
+    { name: 'B.Sc. Genetics & Genomics', category: 'bio' },
+    { name: 'B.Sc. Biomedical Science', category: 'bio' },
+    { name: 'B.Sc. Forensic Science', category: 'bio' },
+    { name: 'B.Sc. Neuroscience', category: 'bio' },
+
+    // Mathematical & Statistical
+    { name: 'B.Sc. Mathematics', category: 'math' },
+    { name: 'B.Sc. Applied Mathematics & Computing', category: 'math' },
+    { name: 'B.Sc. Statistics', category: 'math' },
+    { name: 'B.Sc. Actuarial Science', category: 'math' },
+
+    // Applied, Earth & Environmental
+    { name: 'B.Sc. Environmental Science & Ecology', category: 'applied' },
+    { name: 'B.Sc. Agriculture', category: 'applied' },
+    { name: 'B.Sc. Horticulture', category: 'applied' },
+    { name: 'B.Sc. Food Technology & Nutrition', category: 'applied' },
+    { name: 'B.Sc. Geology & Earth Science', category: 'applied' },
+    { name: 'B.Sc. Forestry & Wildlife Biology', category: 'applied' }
   ];
+
+  const filteredPrograms = degreeCategory === 'all' 
+    ? bscProgramsCategorized 
+    : bscProgramsCategorized.filter(p => p.category === degreeCategory);
 
   const semesterOptions = [
     'Semester I', 'Semester II', 'Semester III', 'Semester IV', 'Semester V', 'Semester VI',
@@ -98,7 +135,7 @@ export const Step1Blueprint: React.FC<Step1BlueprintProps> = ({
               B.Sc. Question Paper Configuration
             </h1>
             <p className="text-slate-300 text-sm mt-1.5 max-w-xl">
-              Configure undergraduate degree examination format, course codes, semesters, question weightages, and college department details.
+              Choose from 30+ undergraduate B.Sc. disciplines or enter a custom program, semester, course code, and mark distribution.
             </p>
           </div>
 
@@ -128,7 +165,7 @@ export const Step1Blueprint: React.FC<Step1BlueprintProps> = ({
               type="text"
               value={details.collegeName}
               onChange={(e) => onDetailsChange({ ...details, collegeName: e.target.value })}
-              placeholder="e.g. Department of Computer Science / Faculty of Physical Sciences"
+              placeholder="e.g. Faculty of Science / Department of Computer Science"
               className="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100 text-sm focus:outline-none focus:border-indigo-500 transition"
             />
           </div>
@@ -146,31 +183,60 @@ export const Step1Blueprint: React.FC<Step1BlueprintProps> = ({
             />
           </div>
 
-          <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
-              B.Sc. Degree Program
-            </label>
+          <div className="sm:col-span-2">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-1.5">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400">
+                B.Sc. Degree Program ({bscProgramsCategorized.length} Programs Available)
+              </label>
+              {/* Category Filter Chips */}
+              <div className="flex flex-wrap gap-1 text-[11px]">
+                {[
+                  { id: 'all', label: 'All' },
+                  { id: 'cs', label: 'Computing & IT' },
+                  { id: 'phys', label: 'Physics & Electronics' },
+                  { id: 'chem', label: 'Chemistry' },
+                  { id: 'bio', label: 'Bio & Life Sciences' },
+                  { id: 'math', label: 'Math & Stats' },
+                  { id: 'applied', label: 'Earth & Applied' }
+                ].map((cat) => (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => setDegreeCategory(cat.id as any)}
+                    className={`px-2 py-0.5 rounded-md border transition ${
+                      degreeCategory === cat.id
+                        ? 'bg-indigo-600 text-white border-indigo-500 font-bold'
+                        : 'bg-slate-800/80 text-slate-400 border-slate-700 hover:text-white'
+                    }`}
+                  >
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <input
               type="text"
               value={details.degreeProgram}
               onChange={(e) => onDetailsChange({ ...details, degreeProgram: e.target.value })}
-              placeholder="e.g. B.Sc. Computer Science"
-              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100 text-sm focus:outline-none focus:border-indigo-500 transition"
+              placeholder="e.g. B.Sc. Computer Science / Type any custom degree"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100 text-sm font-semibold focus:outline-none focus:border-indigo-500 transition mb-2"
             />
-            {/* Quick Programs */}
-            <div className="flex flex-wrap gap-1.5 mt-2">
-              {bscPrograms.map((prog) => (
+
+            {/* Quick Degree Chips */}
+            <div className="flex flex-wrap gap-1.5 max-h-36 overflow-y-auto pr-1">
+              {filteredPrograms.map((prog) => (
                 <button
-                  key={prog}
+                  key={prog.name}
                   type="button"
-                  onClick={() => onDetailsChange({ ...details, degreeProgram: prog })}
-                  className={`text-[11px] px-2 py-0.5 rounded-md border transition ${
-                    details.degreeProgram === prog
-                      ? 'bg-indigo-600/30 border-indigo-500 text-indigo-200'
-                      : 'bg-slate-800/60 border-slate-700 text-slate-400 hover:text-slate-200'
+                  onClick={() => onDetailsChange({ ...details, degreeProgram: prog.name })}
+                  className={`text-[11px] px-2.5 py-1 rounded-lg border transition ${
+                    details.degreeProgram === prog.name
+                      ? 'bg-indigo-600/40 border-indigo-500 text-indigo-200 font-bold shadow-sm ring-1 ring-indigo-500'
+                      : 'bg-slate-800/70 border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white'
                   }`}
                 >
-                  {prog}
+                  {prog.name}
                 </button>
               ))}
             </div>
@@ -200,7 +266,7 @@ export const Step1Blueprint: React.FC<Step1BlueprintProps> = ({
                 type="text"
                 value={details.courseCode}
                 onChange={(e) => onDetailsChange({ ...details, courseCode: e.target.value })}
-                placeholder="e.g. CS-501 / PHY-302"
+                placeholder="e.g. CS-501 / PHY-302 / MATH-401"
                 className="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100 text-sm focus:outline-none focus:border-indigo-500 transition"
               />
             </div>
@@ -214,7 +280,7 @@ export const Step1Blueprint: React.FC<Step1BlueprintProps> = ({
               type="text"
               value={details.courseTitle}
               onChange={(e) => onDetailsChange({ ...details, courseTitle: e.target.value })}
-              placeholder="e.g. Data Structures & Algorithms, Quantum Mechanics, Real Analysis"
+              placeholder="e.g. Data Structures & Algorithms, Quantum Mechanics, Molecular Biology"
               className="w-full px-3.5 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100 text-sm focus:outline-none focus:border-indigo-500 transition"
             />
           </div>
@@ -242,7 +308,7 @@ export const Step1Blueprint: React.FC<Step1BlueprintProps> = ({
                 onChange={(e) => onDetailsChange({ ...details, difficulty: e.target.value as Difficulty })}
                 className="w-full px-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100 text-sm focus:outline-none focus:border-indigo-500 transition"
               >
-                <option value="medium">Standard University Level</option>
+                <option value="medium">Standard University Degree Level</option>
                 <option value="hard">Advanced / Honours Level</option>
                 <option value="easy">Foundational / Core</option>
                 <option value="mixed">Mixed Distribution</option>
@@ -252,7 +318,7 @@ export const Step1Blueprint: React.FC<Step1BlueprintProps> = ({
         </div>
       </div>
 
-      {/* Undergraduate Question Format & Quantities */}
+      {/* Question Formats & Quantities */}
       <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
           <div>
@@ -260,7 +326,7 @@ export const Step1Blueprint: React.FC<Step1BlueprintProps> = ({
               <CheckCircle2 className="w-5 h-5 text-indigo-400" />
               <span>B.Sc. Question Types & Mark Allocations</span>
             </h2>
-            <p className="text-xs text-slate-400">Undergraduate degree question formats (Derivations, Proofs, Long Analytical, Numericals)</p>
+            <p className="text-xs text-slate-400">Configure undergraduate question weightages</p>
           </div>
 
           <div className="px-3.5 py-1.5 rounded-xl bg-indigo-950/60 border border-indigo-500/40 text-xs font-bold text-indigo-300 flex items-center space-x-2">
@@ -313,7 +379,7 @@ export const Step1Blueprint: React.FC<Step1BlueprintProps> = ({
                     <input
                       type="number"
                       min="1"
-                      max="30"
+                      max="50"
                       value={config.marksPerQuestion}
                       onChange={(e) => handleUpdateConfig(idx, { marksPerQuestion: Math.max(1, Number(e.target.value) || 1) })}
                       className="w-14 text-center text-xs font-bold bg-slate-900 border border-slate-700 px-2 py-1.5 rounded-lg text-amber-300 focus:outline-none focus:border-indigo-500"
@@ -326,7 +392,7 @@ export const Step1Blueprint: React.FC<Step1BlueprintProps> = ({
         </div>
       </div>
 
-      {/* University Exam Instructions */}
+      {/* Exam Instructions */}
       <div className="bg-slate-900/70 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
         <h2 className="text-base font-bold text-white flex items-center space-x-2">
           <span>Instructions for Candidates</span>
@@ -362,7 +428,7 @@ export const Step1Blueprint: React.FC<Step1BlueprintProps> = ({
               value={newInstruction}
               onChange={(e) => setNewInstruction(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleAddInstruction()}
-              placeholder="Add candidate instruction (e.g. Non-programmable scientific calculators are permitted)..."
+              placeholder="Add candidate instruction..."
               className="flex-1 px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
             />
             <button
@@ -379,7 +445,7 @@ export const Step1Blueprint: React.FC<Step1BlueprintProps> = ({
       {/* Bottom Action */}
       <div className="flex items-center justify-between pt-4 border-t border-slate-800">
         <div className="text-xs text-slate-400">
-          Degree: {details.degreeProgram} | Total Marks: {calculatedTotalMarks} M
+          Degree: {details.degreeProgram} | Total: {calculatedTotalMarks} Marks
         </div>
         <button
           onClick={onNext}

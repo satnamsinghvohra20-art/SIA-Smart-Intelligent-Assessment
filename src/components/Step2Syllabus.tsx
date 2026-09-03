@@ -33,24 +33,116 @@ export const Step2Syllabus: React.FC<Step2SyllabusProps> = ({
   isGenerating,
   hasApiKey
 }) => {
-  // B.Sc. Degree Subject Topic Catalogs
+  // Comprehensive B.Sc. Degree Subject Topic Catalogs
   const bscTopicCatalogs: Record<string, string[]> = {
     'B.Sc. Computer Science': [
-      'Data Structures: Arrays, Linked Lists, Stacks, Queues, Binary Search Trees, Graphs & AVL Trees',
-      'Algorithms: Divide & Conquer, Dynamic Programming, Greedy Methods, Graph Traversal (BFS/DFS), Time & Space Complexity',
+      'Data Structures: Linked Lists, Stacks, Queues, Binary Search Trees, Graphs & AVL Trees',
+      'Algorithms: Divide & Conquer, Dynamic Programming, Greedy Methods, Graph Traversal (BFS/DFS), Asymptotic Complexity',
       'Operating Systems: Process Synchronization, Semaphores, CPU Scheduling, Deadlock Avoidance, Virtual Memory & Paging',
-      'Database Management Systems: Relational Algebra, SQL Queries, Normalization (1NF to BCNF), Transaction ACID Properties & Concurrency',
+      'Database Management Systems: Relational Algebra, SQL Queries, Normalization (1NF to BCNF), Transaction ACID Properties',
       'Object-Oriented Programming: Inheritance, Polymorphism, Virtual Functions, Templates & Exception Handling in C++/Java',
-      'Theory of Computation: Finite Automata (DFA/NFA), Regular Expressions, Context-Free Grammars, Pushdown Automata & Turing Machines',
+      'Theory of Computation: Finite Automata (DFA/NFA), Regular Expressions, Context-Free Grammars & Turing Machines',
       'Computer Networks: OSI & TCP/IP Model, Flow & Error Control, IP Addressing, Routing Algorithms & Network Security'
+    ],
+    'B.Sc. Information Technology': [
+      'Web Technologies: HTML5, CSS3, JavaScript ES6+, DOM Manipulation, REST APIs & Responsive Frameworks',
+      'Cloud Computing & Virtualization: Hypervisors, IaaS/PaaS/SaaS, AWS/Azure Core Architecture & Containerization (Docker)',
+      'Information Security & Cryptography: Symmetric/Asymmetric Ciphers, RSA, AES, Hash Functions, Digital Signatures & Firewalls',
+      'Mobile Application Development: Android/iOS App Lifecycle, Intents, UI Components, SQLite & State Management',
+      'Software Engineering: Agile Methodologies, SDLC, UML Modeling, Software Testing & Quality Assurance'
+    ],
+    'B.Sc. Data Science & Analytics': [
+      'Statistical Computing & Probability: Random Variables, Probability Distributions, Sampling Theory & Hypothesis Testing (t-test/ANOVA)',
+      'Machine Learning: Linear/Logistic Regression, Decision Trees, Random Forests, SVM, k-Means Clustering & PCA',
+      'Big Data Technologies: Hadoop HDFS, MapReduce, Apache Spark, PySpark RDDs & Distributed Data Processing',
+      'Data Mining & Feature Engineering: Outlier Detection, Imputation, Dimensionality Reduction & Association Rule Mining (Apriori)',
+      'Data Visualization & Business Intelligence: Exploratory Data Analysis, Tableau, Power BI & Seaborn/Matplotlib Storytelling'
+    ],
+    'B.Sc. Artificial Intelligence & ML': [
+      'Deep Learning & Neural Networks: Perceptrons, Multi-Layer Perceptrons, Backpropagation, CNNs & Recurrent Neural Networks (RNN/LSTM)',
+      'Natural Language Processing: Tokenization, TF-IDF, Word Embeddings (Word2Vec), Transformers & Attention Mechanisms',
+      'Reinforcement Learning: Markov Decision Processes, Bellman Equation, Q-Learning & Policy Gradients',
+      'Computer Vision: Image Filtering, Edge Detection, Object Detection (YOLO), Image Segmentation & Feature Extraction'
+    ],
+    'B.Sc. Cyber Security & Forensics': [
+      'Network Security: Intrusion Detection Systems (IDS/IPS), Packet Sniffing (Wireshark), VPNs & SSL/TLS Protocol Analysis',
+      'Ethical Hacking & Penetration Testing: Vulnerability Scanning, OWASP Top 10, SQL Injection, XSS & Metasploit Framework',
+      'Digital Forensics: Evidence Acquisition, Disk Imaging, Memory Forensics, File System Artifacts & Chain of Custody'
     ],
     'B.Sc. Physics': [
       'Quantum Mechanics: Wave-particle duality, Schrödinger Wave Equation, Particle in a 1D Box, Harmonic Oscillator & Hydrogen Atom',
       'Electrodynamics & Wave Optics: Maxwell Equations, Electromagnetic Wave Propagation, Interference, Diffraction & Polarization',
       'Thermodynamics & Statistical Physics: Laws of Thermodynamics, Carnot Engine, Maxwell-Boltzmann, Bose-Einstein & Fermi-Dirac Statistics',
       'Classical Mechanics: Lagrangian and Hamiltonian Formulations, Central Force Motion, Rigid Body Dynamics & Special Relativity',
-      'Solid State Physics: Crystal Structures, X-ray Diffraction (Bragg Law), Free Electron Theory, Band Theory of Solids & Superconductivity',
+      'Solid State Physics: Crystal Structures, X-ray Diffraction (Bragg Law), Free Electron Theory, Band Theory & Superconductivity',
       'Nuclear Physics: Nuclear Binding Energy, Liquid Drop Model, Shell Model, Radioactive Decay Laws & Particle Accelerators'
+    ],
+    'B.Sc. Applied Physics': [
+      'Semiconductor Devices: PN Junction Diodes, BJT, MOSFET, Optoelectronic Devices (LEDs, Solar Cells & Laser Diodes)',
+      'Fiber Optics & Photonics: Total Internal Reflection, Numerical Aperture, Optical Fibers, Dispersion, Attenuation & Waveguides',
+      'Vacuum & Thin Film Technology: Thermal Evaporation, Sputtering, Chemical Vapor Deposition (CVD) & Thickness Characterization'
+    ],
+    'B.Sc. Electronics': [
+      'Digital Electronics: Boolean Algebra, Karnaugh Maps, Combinational Logic (Multiplexers/Decoders) & Sequential Logic (Flip-Flops, Counters)',
+      'Microprocessors & Microcontrollers: 8085/8086 Architecture, Instruction Set, Memory Interfacing & Embedded C Programming',
+      'Signals & Systems: Continuous/Discrete Signals, LTI Systems, Fourier Transform, Laplace Transform & Z-Transform Analysis',
+      'Analog Electronic Circuits: Op-Amp Applications (Inverting, Non-inverting, Integrator, Differentiator), Oscillators & Active Filters'
+    ],
+    'B.Sc. Astrophysics & Space Science': [
+      'Stellar Physics: Hertzsprung-Russell Diagram, Stellar Nucleosynthesis, Hydrostatic Equilibrium & Stellar Evolution',
+      'Cosmology & General Relativity: Hubble Law, Expanding Universe, Big Bang Model, Dark Matter & Gravitational Waves',
+      'Observational Astronomy: Optical/Radio Telescopes, Spectroscopy, Photometry & Celestial Coordinate Systems'
+    ],
+    'B.Sc. Nanotechnology & Materials Science': [
+      'Synthesis of Nanomaterials: Top-Down vs Bottom-Up Approaches, Sol-Gel, Ball Milling & Hydrothermal Synthesis',
+      'Characterization Techniques: SEM, TEM, AFM, XRD (Scherrer Equation) & UV-Vis Spectroscopy',
+      'Nanostructured Materials: Quantum Dots, Carbon Nanotubes, Graphene, Nanocomposites & Nanomedicine Applications'
+    ],
+    'B.Sc. Chemistry': [
+      'Organic Chemistry: Reaction Mechanisms (SN1, SN2, E1, E2), Electrophilic Aromatic Substitution, Carbonyl Reactions, Aldol & Claisen Condensation',
+      'Inorganic Chemistry: Crystal Field Theory, Ligand Field Theory, Coordination Complexes (Isomerism & Magnetic Properties), Organometallics',
+      'Physical Chemistry: Chemical Kinetics (Order of Reaction, Arrhenius), Chemical Thermodynamics, Phase Equilibria, Electrochemistry (Nernst Eq)',
+      'Spectroscopy: UV-Visible, IR, NMR (1H-NMR Chemical Shifts), Mass Spectrometry & Structural Elucidation',
+      'Quantum Chemistry: Postulates of Quantum Mechanics, Operators, Particle in a Box, Valence Bond & Molecular Orbital (MO) Theory'
+    ],
+    'B.Sc. Biochemistry': [
+      'Enzymology: Enzyme Classification, Michaelis-Menten Kinetics, Enzyme Inhibition (Competitive/Non-competitive) & Coenzymes',
+      'Metabolic Pathways: Glycolysis, TCA Cycle, Oxidative Phosphorylation, Gluconeogenesis, Beta-Oxidation of Fatty Acids & Urea Cycle',
+      'Molecular Genetics & Bioenergetics: Nucleic Acid Structure, DNA Repair Mechanisms, High-energy Phosphates & ATP Synthesis'
+    ],
+    'B.Sc. Biotechnology': [
+      'Molecular Biology: DNA Replication, Transcription, RNA Splicing, Translation, Genetic Code & Operon Models (lac Operon)',
+      'Genetic Engineering & Recombinant DNA: Restriction Enzymes, Cloning Vectors (Plasmids, Bacteriophages), PCR, Gel Electrophoresis & CRISPR-Cas9',
+      'Bioprocess Engineering: Bioreactor Design, Fermentation Kinetics, Upstream & Downstream Processing, Scale-Up Strategies',
+      'Immunology: Innate & Adaptive Immunity, Structure of Antibodies, Antigen-Antibody Interactions, ELISA & Monoclonal Antibodies'
+    ],
+    'B.Sc. Microbiology': [
+      'General Bacteriology: Bacterial Morphology, Gram Staining, Cell Wall Ultrastructure, Growth Curve & Culture Techniques',
+      'Virology & Mycology: Viral Replication Cycles (Lytic/Lysogenic), Retroviruses, Fungal Taxonomy & Medical Mycology',
+      'Microbial Genetics: Conjugation, Transformation, Transduction, Plasmids, Transposons & Mutation Mechanisms',
+      'Industrial & Medical Microbiology: Antibiotics Mode of Action, Vaccine Production, Pathogenicity & Food Preservation'
+    ],
+    'B.Sc. Zoology': [
+      'Non-Chordates & Chordates: Comparative Anatomy, Classification, Evolutionary Adaptations & Organ Systems',
+      'Animal Physiology & Endocrinology: Respiration, Excretion (Nephron Function), Nervous Transmission & Hormonal Regulation',
+      'Genetics & Developmental Biology: Mendelian Genetics, Linkage & Crossing Over, Embryogenesis, Cleavage & Gastrulation'
+    ],
+    'B.Sc. Botany': [
+      'Plant Anatomy & Physiology: Photosynthesis (C3/C4/CAM), Transpiration, Phytohormones (Auxin, Gibberellin, Cytokinin), Nitrogen Metabolism',
+      'Plant Taxonomy & Systematics: Bentham & Hooker Classification, Herbarium Techniques, Floral Morphology & Key Botanical Families',
+      'Cryptogams & Phanerogams: Algae, Fungi, Bryophytes, Pteridophytes, Gymnosperms & Angiosperm Life Cycles'
+    ],
+    'B.Sc. Genetics & Genomics': [
+      'Classical & Cytogenetics: Chromosome Mapping, Karyotyping, Chromosomal Aberrations, Non-Mendelian Inheritance & Epigenetics',
+      'Genomic Technologies: Next-Generation Sequencing (NGS), Sanger Sequencing, Microarray Analysis & Genome Annotation'
+    ],
+    'B.Sc. Biomedical Science': [
+      'Human Anatomy & Pathology: Cellular Adaptations, Inflammation, Neoplasia, Cardiovascular & Renal Pathophysiology',
+      'Pharmacology & Toxicology: Pharmacokinetics (ADME), Pharmacodynamics, Drug Receptors & Mechanisms of Drug Toxicity'
+    ],
+    'B.Sc. Forensic Science': [
+      'Forensic Ballistics & Trace Evidence: Firearms Identification, Striation Marks, Glass, Soil, Hair & Fiber Analysis',
+      'Forensic Biology & Serology: Bloodstain Pattern Analysis, DNA Fingerprinting (STR/CODIS), Forensic Toxicology & Autopsy Protocols'
     ],
     'B.Sc. Mathematics': [
       'Real Analysis: Sequences & Series Convergence, Metric Spaces, Bolzano-Weierstrass Theorem, Riemann Integration & Uniform Continuity',
@@ -60,24 +152,33 @@ export const Step2Syllabus: React.FC<Step2SyllabusProps> = ({
       'Complex Analysis: Analytic Functions, Cauchy-Riemann Equations, Cauchy Integral Theorem, Residue Calculus & Laurent Series',
       'Numerical Analysis: Newton-Raphson, Gauss Elimination, Interpolation (Lagrange/Newton), Numerical Integration (Simpson/Trapezoidal)'
     ],
-    'B.Sc. Chemistry': [
-      'Organic Chemistry: Reaction Mechanisms (SN1, SN2, E1, E2), Electrophilic Aromatic Substitution, Carbonyl Reactions, Aldol & Claisen Condensation',
-      'Inorganic Chemistry: Crystal Field Theory, Ligand Field Theory, Coordination Complexes (Isomerism & Magnetic Properties), Organometallics',
-      'Physical Chemistry: Chemical Kinetics (Order of Reaction, Arrhenius), Chemical Thermodynamics, Phase Equilibria, Electrochemistry (Nernst Eq)',
-      'Spectroscopy: UV-Visible, IR, NMR (1H-NMR Chemical Shifts), Mass Spectrometry & Structural Elucidation of Organic Molecules',
-      'Quantum Chemistry: Postulates of Quantum Mechanics, Operators, Particle in a Box, Valence Bond & Molecular Orbital (MO) Theory'
+    'B.Sc. Statistics': [
+      'Probability & Random Variables: Joint/Marginal Probability, Characteristic Functions, Law of Large Numbers & Central Limit Theorem',
+      'Statistical Inference: Point Estimation (MLE, Method of Moments), Confidence Intervals, Neyman-Pearson Lemma & Likelihood Ratio Tests',
+      'Design of Experiments & Regression: CRD, RBD, Latin Square Design, Multiple Linear Regression & ANOVA'
     ],
-    'B.Sc. Biotechnology': [
-      'Molecular Biology: DNA Replication, Transcription, RNA Splicing, Translation, Genetic Code & Operon Models (lac Operon)',
-      'Genetic Engineering & Recombinant DNA: Restriction Enzymes, Cloning Vectors (Plasmids, Bacteriophages), PCR, Gel Electrophoresis & CRISPR-Cas9',
-      'Biochemistry & Enzymology: Protein Structure, Enzyme Kinetics (Michaelis-Menten Equation, Lineweaver-Burk Plot), Allosteric Regulation',
-      'Immunology: Innate & Adaptive Immunity, Structure & Classes of Antibodies, Antigen-Antibody Interactions, ELISA & Monoclonal Antibodies',
-      'Cell Biology: Membrane Transport Mechanisms, Signal Transduction Pathways, Cell Cycle Checkpoints & Apoptosis'
+    'B.Sc. Environmental Science & Ecology': [
+      'Ecosystem Dynamics: Energy Flow, Food Webs, Biogeochemical Cycles (Carbon/Nitrogen/Phosphorus), Ecological Succession',
+      'Environmental Pollution & Waste Management: Air Quality Indices, Wastewater Treatment, Solid/Hazardous Waste Management & EIA (Environmental Impact Assessment)',
+      'Biodiversity Conservation & Climate Change: In-situ/Ex-situ Conservation, Global Warming, Greenhouse Gases & International Environmental Treaties'
+    ],
+    'B.Sc. Agriculture': [
+      'Agronomy & Crop Production: Seed Germination, Irrigation Management, Crop Rotation, Weed Control & Organic Farming Practices',
+      'Soil Science & Agricultural Chemistry: Soil Texture, Nutrient Management (NPK), Soil pH, Cation Exchange Capacity & Fertilizer Formulations',
+      'Plant Breeding & Genetics: Hybridization, Heterosis, Mass Selection, Pure Line Selection & Disease Resistance Breeding'
+    ],
+    'B.Sc. Food Technology & Nutrition': [
+      'Food Chemistry & Preservation: Food Spoilage Mechanisms, Thermal Processing (Pasteurization, Retorting), Freezing, Dehydration & Food Additives',
+      'Food Quality Control & Safety: HACCP, ISO 22000, FSSAI Standards, Sensory Evaluation & Microbiological Safety Testing'
+    ],
+    'B.Sc. Geology & Earth Science': [
+      'Mineralogy & Petrology: Crystal Systems, Optical Mineralogy, Igneous, Sedimentary & Metamorphic Rock Formations',
+      'Structural Geology & Stratigraphy: Folds, Faults, Unconformities, Geological Mapping, Plate Tectonics & Fossil Chronology'
     ]
   };
 
   const currentProgramTopics = bscTopicCatalogs[details.degreeProgram] || [
-    'Unit 1: Theoretical Foundations, Postulates & Core Mathematical Formulations',
+    'Unit 1: Theoretical Foundations, Axioms & Core Mathematical/Scientific Formulations',
     'Unit 2: Analytical Modeling, Derivations & Characteristic Solutions',
     'Unit 3: Algorithmic / Experimental Methodologies & System Architecture',
     'Unit 4: Advanced Problem Solving, Boundary Analysis & Case Studies'
@@ -158,12 +259,12 @@ export const Step2Syllabus: React.FC<Step2SyllabusProps> = ({
         <div className="flex items-center justify-between">
           <label className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center space-x-1.5">
             <Sparkles className="w-4 h-4 text-purple-400" />
-            <span>Standard B.Sc. Curriculum Modules for {details.degreeProgram}:</span>
+            <span>Standard B.Sc. Modules for {details.degreeProgram}:</span>
           </label>
           <span className="text-[11px] text-slate-400">Click to insert into syllabus</span>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
           {currentProgramTopics.map((topic, idx) => {
             const isAdded = syllabus.includes(topic);
             return (
@@ -176,8 +277,8 @@ export const Step2Syllabus: React.FC<Step2SyllabusProps> = ({
                     : 'bg-slate-800/80 border-slate-700 text-slate-300 hover:bg-slate-700/80 hover:text-white'
                 }`}
               >
-                <div className="flex items-center space-x-2">
-                  <span className="font-bold text-purple-400">Unit {idx + 1}:</span>
+                <div className="flex items-start space-x-2">
+                  <span className="font-bold text-purple-400 shrink-0">Unit {idx + 1}:</span>
                   <span>{topic}</span>
                 </div>
                 {isAdded ? (
